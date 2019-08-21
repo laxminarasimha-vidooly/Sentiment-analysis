@@ -1,67 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 06 16:51:39 2019
-
-@author: Administrator
-"""
-
+#Importing libraries
 import pandas as pd
 import requests
 from random import randint
 import json
 import os
 import time 
-#from random import sample 
 import time
 
-
-
-#path=os.path.dirname(os.path.abspath(__file__))
-path=r"C:\Server backup\VIDOOLY NILANJAN\Python\RnD APIs\Py2_Code_for_sentiment_analysis"
 os.chdir(path)
-
-
-
-            
-keys=[  "AIzaSyAAbyrs8ofXHbyVDZV-u7DpH9c9IVAOok0",
-        "AIzaSyB2NcRfFR2NwggTtobJpEOnY9YoEM9byZM",
-        "AIzaSyDE_ihZTZB-3V29zzl9VqdEV945ZtaUMEQ",
-        "AIzaSyBOoIbMV06l1-Vn10acksO54OCE2gmrjNE",
-        "AIzaSyDw4U6z7GOqZLncFKUIaLj789ZxumPINkc",
-        "AIzaSyAHegHlR1UfY6R-imJr1faqDxGM0YL-sBY",
-        "AIzaSyBZvJhBF1MZn579tGdpta50HCl2CW374_U",
-        "AIzaSyDUxDpxv1crwr4h3ZF9f7MCEV4kbPBMOCY",
-        "AIzaSyDIuWfiFyyQ2TEihNVtnjqM39h7DoDPF3M",
-        "AIzaSyDGIUHpM-KvnD1Xpa7m60KhxoJpEA1Iejk",
-        "AIzaSyBedbS79J8txSToZqtelgaVyhY4mV9_7Bo",
-        "AIzaSyBHiE5t86GKVX-YuKrV-09flVtZ1R1s6mA",
-        "AIzaSyAV4W2ILFEl_4pkCZqAtjbK72I3Gp1m0Cc",
-        "AIzaSyDMHv0urqfb2mKOMaUS5WNEdb4Oy5ZEYj8",
-        "AIzaSyDQKbA4-SgwChoW7o-eWyPCNZ4YXG9RiI4",
-        "AIzaSyAJiPQIjjRkB3Q5WEAg6FgHZANastW9KKA",
-        "AIzaSyACrpudPvAJRNdj5ivQvG-J3RCikudfgpU",
-        "AIzaSyCy97QAOAgYVfZ9Ow-jA5NK7Htx3d4ccF0",
-        "AIzaSyD17YtJy2QvWPLYux58kGTvui88fmkqGdk",
-        "AIzaSyCk2wFTWETQ1S7seIi2EpLiBx1ca441np0",
-        "AIzaSyBhFtmV1-g9VjAYAiBqUjK345E9DDjS9GU",
-        "AIzaSyAKowKJtGAwfXB2jyyDVwPPEfb6h7pf38w",
-        "AIzaSyAsaTykyKSl5RJU-VblfzbWZV91xBsU3LY",
-        "AIzaSyDKx06vBwIV9xEyJ8f4jtzF9paYrobo2LQ",
-        "AIzaSyCJWDycPhHWdNa-Aq4szg-qCUG9duvYCQM",
-        "AIzaSyBldusMn6DgCytnfT7qOOSkQCN3v0Vhx4Y",
-        "AIzaSyBrJDpvtSIy3QuOy_8z0bMmMMLpHd00aRg",
-        "AIzaSyBzIjt_wqzV1eerCxs8MxIe7OFQZUi450o",
-        "AIzaSyCTcH5_7gtbJj0H5dUaVlU_s6GVYAFK2C0",
-        "AIzaSyBtJUkwwoxy358XDULHrhQ3P1y5byB09bk",
-        "AIzaSyAMBkTSh_pAExcZAdw8YkRrLCrufL6CoeQ",
-        "AIzaSyAEc4oyEhv6DRzqoTjR4L1I364FXoOf8lM",
-        "AIzaSyCpaoS2su4DL0olktnyijJ_4xjAEF56CNE",
-        "AIzaSyBZkyYbqhjXFw3AQ3dy5XTGuQ47juXUHUY",
-        "AIzaSyCjgXwsY1YI-Q20x0_SKu3ExjRgnRvgjio",
-        "AIzaSyAjFS4riCr8nwOMpund3jFwWbnSXidFd5s",
-        "AIzaSyB8knEJrV_iSDnWUMwPJQa2QM2Pm2jAhIw",
-        "AIzaSyD-gVbpxr8LWSiIHjDuTT-wlFARSC9KZ2w"]
-
+keys=["keys"]
+#Key check
 keys3=[]
 n=1
 for k in range(len(keys)):
@@ -83,12 +31,14 @@ def get_random_api_key(keys2):
     random_api_key = keys2[random_no]
     return random_api_key,random_no  
 
+#Reading video ids
 #def sentiment_analysis(emailid):
 source=pd.read_csv("source.csv",header=None,encoding="utf-8")
 
 columns=["videoid", "total","positive", "neutral", "negative"]
 sentiment_fin=pd.DataFrame(columns=columns)
 
+#Get comments from youtube
 base_url = 'https://www.googleapis.com/youtube/v3/commentThreads?'
 base_url1='textFormat=plainText&part=snippet&key='
 base_url2='&maxResults=100&pageToken='
@@ -178,42 +128,10 @@ for i in range(len(source)):
                             comment_temp.iloc[i,4]=item.get("snippet").get("topLevelComment").get("snippet").get("textDisplay").replace("\r"," ").replace("\n"," ").replace("\t"," ")
     #                   
                     comment_fin=comment_fin.append(comment_temp)        
-    #                    if item.get("snippet").get("topLevelComment").get("snippet").get("authorDisplayName"):
-    #                        authorDisplayName.append(item.get("snippet").get("topLevelComment").get("snippet").get("authorDisplayName"))
-    #                    else:
-    #                        authorDisplayName.append("N/A")
-    #                    if item.get("snippet").get("topLevelComment").get("snippet").get("textDisplay"):
-    #                        textDisplay.append(item.get("snippet").get("topLevelComment").get("snippet").get("textDisplay"))
-    #                    else:
-    #                        authorDisplayName.append("N/A")
-    #                    if item.get("snippet").get("topLevelComment").get("snippet").get("publishedAt"):
-    #                        publishedAt.append(item.get("snippet").get("topLevelComment").get("snippet").get("publishedAt"))
-    #                    else:
-    #                        authorDisplayName.append("N/A")
-    #                    if item.get("snippet").get("topLevelComment").get("snippet").get("authorChannelId"):
-    #                        authorChannelId.append(item.get("snippet").get("topLevelComment").get("snippet").get("authorChannelId").get("value"))
-    #                    else:
-    #                        authorDisplayName.append("N/A")
-    #                    if item.get("snippet").get("topLevelComment").get("snippet").get("videoId"):
-    #                        videoId.append(item.get("snippet").get("topLevelComment").get("snippet").get("videoId"))
-    #                    else:
-    #                        authorDisplayName.append("N/A")         
-    
-
         end=time.time()
         elapsed=end-start
         elapsed_fin+=elapsed
         
         print elapsed,elapsed_fin,len(comment_fin)
         
-#len(videoId)
-#len(authorDisplayName)
-#len(publishedAt)
-#len(authorChannelId)
-#
-#nest=[authorDisplayName,textDisplay,publishedAt,authorChannelId]
-#
-#comments=pd.DataFrame((_ for _ in itertools.zip_longest(nest)), columns=["authorDisplayName","textDisplay","publishedAt","authorChannelId"])
-#comments=pd.DataFrame(data={'value':nest},index=["authorDisplayName","textDisplay","publishedAt","authorChannelId"]).value.apply(pd.Series).T
-#comments=pd.DataFrame({"authorDisplayName":authorDisplayName,"textDisplay":textDisplay,"publishedAt":publishedAt,"authorChannelId":authorChannelId,"videoId":videoId})
 comment_fin.to_csv('Comments.csv', sep="\t", encoding="utf-8")
