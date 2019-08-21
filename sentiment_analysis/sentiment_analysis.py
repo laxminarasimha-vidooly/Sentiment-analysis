@@ -1,3 +1,4 @@
+#Importing libraries
 import pandas as pd
 from lxml import html
 import requests
@@ -26,7 +27,7 @@ os.chdir(path)
 keys=["Keys"]
 
 keys3=[]
-
+#key check
 for k in range(len(keys)):
     base_url="https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&"
     dum_url=base_url+"key="+keys[k]+"&id=UCw9Ponb04uNH2AT5gPZ2z6A"
